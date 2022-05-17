@@ -1,8 +1,9 @@
 const express = require('express')
 const mongoose= require('mongoose')
 const app = express()
-const PORT = process.env.PORT || 8080
+
 require('dotenv').config()
+const PORT = process.env.PORT
 
 app.use(express.json())
 
@@ -16,7 +17,7 @@ mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true})
 
 app.use((req, res, next) => {
     res.append('Access-Control-Allow-Origin', ['*'])
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    res.append('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
     res.append('Access-Control-Allow-Headers', 'Content-Type')
     next()
 })
@@ -24,8 +25,11 @@ app.use((req, res, next) => {
 /**
  * Routes
  */
-const register = require('./routes/register')
-app.use('/register', register)
+const signup = require('./routes/signUp')
+app.use('/signup', signup)
 
-const login = require('./routes/login')
-app.use('/login', login)
+const signin = require('./routes/signIn')
+app.use('/signin', signin)
+
+const posts = require('./routes/posts')
+app.use('/posts', posts)
